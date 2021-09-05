@@ -1,42 +1,12 @@
-package main
+package server
 
 import (
 	"crypto/tls"
-	"log"
 	"net/http"
-	"os"
 	"time"
 )
 
-const message = "Hola mundo ! Como estamos?"
-
-var (
-	apiPort = os.Getenv("API_PORT")
-)
-
-func main() {
-
-	mux := http.NewServeMux()
-
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(message))
-	})
-
-	mux.HandleFunc("/users", func(rw http.ResponseWriter, r *http.Request) {
-		rw.Write([]byte("oeoeoeoeo"))
-	})
-
-	srv := NewServer(mux, apiPort)
-
-	err := srv.ListenAndServe()
-	if err != nil {
-		log.Fatalf("server failed to start: %v", err)
-	}
-
-}
-
-func NewServer(mux *http.ServeMux, serverAddress string) *http.Server {
+func New(mux *http.ServeMux, serverAddress string) *http.Server {
 	tlsConfig := &tls.Config{
 		PreferServerCipherSuites: true,
 		CurvePreferences: []tls.CurveID{

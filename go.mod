@@ -1,4 +1,4 @@
-module example.com/hello
+module alexis-api.com/main
 
 go 1.17
 
